@@ -17,7 +17,13 @@ repositories {
 	mavenCentral()
 }
 
+//여기서  Lombok 작업할떄 중요한 부분
+//dependencies는 프로젝트 생성할때 넣었던 도구들
 dependencies {
+	//롬복 2가지 추가!
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
