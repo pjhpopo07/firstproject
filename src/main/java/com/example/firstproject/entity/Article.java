@@ -2,11 +2,13 @@ package com.example.firstproject.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity //DB가 해당 객체를 인식 가능!
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor //매개변수 없는 생성자 코드를 작성할 필요가 없다.
 public class Article {
     /*Article 클래스 'Article'에는
     [public, protected] no-arg 생성자가 포함되어아 하는 오류*/
@@ -20,8 +22,4 @@ public class Article {
 
     @Column
     private  String content;
-
-    public Article() {
-
-    }
 }
