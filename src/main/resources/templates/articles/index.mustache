@@ -1,0 +1,25 @@
+{{>layouts/header}}
+
+{{!show.mustache에서 작성한 코드 가져와서 붙어 넣기}}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th> {{!ㅈ목 변경}}
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        {{!<th scope="col">Handle</th> -> 삭제 }}
+    </tr>
+    </thead>
+    <tbody>
+    {{! #article /article 사이에 사용 범위를 정할 수 있다.}}
+    {{#articleList}}
+        <tr>
+            <th>{{id}}</th>
+            <td>{{title}}</td>
+            <td>{{content}}</td>
+        </tr>
+    {{/articleList}}
+    </tbody>
+</table>
+
+{{>layouts/footer}}

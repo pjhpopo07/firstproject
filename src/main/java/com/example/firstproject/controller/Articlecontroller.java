@@ -3,6 +3,7 @@ package com.example.firstproject.controller;
 import com.example.firstproject.entity.Article;
 import com.example.firstproject.repository.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.modeler.BaseAttributeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.firstproject.dto.ArticleForm;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -46,7 +49,7 @@ public class Articlecontroller {
 
     @GetMapping("/articles/{id}") // 데이터 조회 요청 접수
     public String show(@PathVariable Long id, Model model) {
-        log.info("id="+ id); //매개변수로 id 받아오기
+        log.info("id=" + id); //매개변수로 id 받아오기
         //1.ID 조회하여 DB에서 해당 데이터 가져오기
         //#1 첫번째 방법 Optional<Article> articleEntity = articleRepository.findById(id); //findByID()는 JPA의 CrudRepository 제공하는 메서드
         //aricleRepository가 findBy(id)를 반환할 떄 반환형 Article이 아니라서 반환형인 Optional<Article>를 사용한다.
@@ -59,8 +62,23 @@ public class Articlecontroller {
         return "articles/show";
         //localhost:8080/articles/1000으로 접속
         //서버의 컨트롤러가 URL 요청을 받는 것까지 작업
-        }
+    }
 
+    @GetMapping("/articles")
+    public String index(Model model) {
+        //1.모든 데이터 가져오기
+        ArrayList<Article> articleEntityList = articleRepository.findAll();
+        ///findAll() 메서드 반환하는 데이터 타입은 Iterable인데 작성한 타입은 List라서 서로 불일치한다는 메세지가 뜬다.
+        ///해결방안 1. 캐스팅(형 변환) 2.articleEntity의 타입을 findAll()메서드 반환하는 타입으로 맞추는 방법 3.ArratList 이용
+        /// Iterable>Collection>List 인터페이스 상하관계
+        //2.모델에 데이터를 등록하기
+        model.addAttribute("articleList", articleEntityList);
+        //index 메서드 model 객체 받아오기
+        //articleEntityList를 "articleList"라는 이름으로 등록
+        //3. 뷰 페이지 설정하기
+        return "articles/index";
+        //index.mustache 파일 생성
+    }
 
 
 }
