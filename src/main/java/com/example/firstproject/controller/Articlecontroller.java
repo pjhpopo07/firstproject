@@ -44,7 +44,8 @@ public class Articlecontroller {
         //System.out.println(saved.toString()); --> 이것도 로깅으로 대체
         //articleRepository 인식할 수 있어 기본적으로 제공하는 save기능 사용가능
         //articleRepository 객체를 선언을 안해도 spring 자체에서 해준다.
-        return "";
+        return "redirect:/articles/"+ saved.getId(); //리다이렉트를 작성할 위치
+        //리하지터리로 엔티티를 DB에 저장했을 때 save에 정했으니 saved.getIdd()를 호출하여 값을 가져올 수 있다.
     }
 
     @GetMapping("/articles/{id}") // 데이터 조회 요청 접수

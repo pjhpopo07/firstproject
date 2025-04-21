@@ -1,11 +1,10 @@
 package com.example.firstproject.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity //DB가 해당 객체를 인식 가능!
+@Getter //롬복으로 게터 추가
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor //매개변수 없는 생성자 코드를 작성할 필요가 없다.
@@ -22,4 +21,8 @@ public class Article {
 
     @Column
     private  String content;
+
+    ///lic Long getId() {//주의 데이터 타입을 String -> Long으로 변경
+    ///return id;
+    ///}*
 }
