@@ -80,6 +80,20 @@ public class Articlecontroller {
         return "articles/index";
         //index.mustache 파일 생성
     }
+    @GetMapping("/articles/{id}/edit")
+    //GetMapping()의 어노테이션 url 주소에 있는 id를 받아 오는 것이므로 @PathVariable 추가
+    //show.mustache에서 /articles/{{article.id}}/edit로 만들었으니 url에 똑같이 넣어준다.
+    public String edit(@PathVariable Long id, Model model) {
+        //1.수정할 데이터 가져오기
+        Article articleEntity = articleRepository.findById(id).orElse(null);//#2 두번째 방법
+        //id값으로 데이터를 찾을 id 값이 없으면 null로 반환하라는 뜻
 
+        //2.모델에 데이터를 등록하기
+        model.addAttribute("article", articleEntity);
+        //articleList -> article로 변환
+
+        //3.뷰페이지 설정하기
+        return "articles/edit";
+    }
 
 }
