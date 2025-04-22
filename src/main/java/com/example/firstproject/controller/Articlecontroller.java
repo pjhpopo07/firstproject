@@ -83,7 +83,7 @@ public class Articlecontroller {
     @GetMapping("/articles/{id}/edit")
     //GetMapping()의 어노테이션 url 주소에 있는 id를 받아 오는 것이므로 @PathVariable 추가
     //show.mustache에서 /articles/{{article.id}}/edit로 만들었으니 url에 똑같이 넣어준다.
-    public String edit(@PathVariable Long id, Model model) {
+    public String update(@PathVariable Long id, Model model) {
         //1.수정할 데이터 가져오기
         Article articleEntity = articleRepository.findById(id).orElse(null);//#2 두번째 방법
         //id값으로 데이터를 찾을 id 값이 없으면 null로 반환하라는 뜻
@@ -94,6 +94,23 @@ public class Articlecontroller {
 
         //3.뷰페이지 설정하기
         return "articles/edit";
+    }
+    @PostMapping("/articles/update")
+    public String update(ArticleForm form) {
+        //1.DTO를 엔티티로 변환하기
+        Article articleEntity = form.toEntity();
+        log.info(articleEntity.toString());
+        //엔티티로 잘 변환됐는지 로그 찍기
+        //2. 엔티티를 DB에 저장하기
+        //2-1 DB에서 기존 데이터 가져오기
+        Article tagert= articleRepository.findById(articleEntity.getId()).orElse(null);
+        //2-2 기존 데이터 값을 갱신하기
+        if(tagert != null) {
+            articleRepository.save(articleEntity);
+        }
+        log.info(form.toString());
+        //3. 수정 결과 페이지로 리다이렉트하기
+        return "redirect:/articles/"+ articleEntity.getId();
     }
 
 }

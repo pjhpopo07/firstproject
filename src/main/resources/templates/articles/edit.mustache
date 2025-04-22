@@ -1,9 +1,10 @@
 {{!수정한 게시판 HTML}}
 {{>layouts/header}}
 {{#article}}
-<form class="container" action="" method="post">
+<form class="container" action="/articles/update" method="post">
     {{!어디로 보낼지 정할때 action,어떻게 보낼지 method}}
     {{!atcion 속성 값 삭제}}
+    <input name="id" type="hidden" value="{{id}}">
     <div class="mb-3">
         {{!m=margin(마진) !b=botton(아래쪽) }}
         <label class="form-label">제목</label>
