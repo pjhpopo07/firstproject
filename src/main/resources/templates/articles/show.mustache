@@ -23,8 +23,10 @@
 </table>
 
 <a href="/articles/{{article.id}}/edit" class="btn btn-primary">Edit</a>
-{{!Edit 버튼 만들기}}
-{{!class="btn btn-primary" 부트 스트랩 CSS 적용해 속성 추가}}
+{{!Edit 버튼 만들기,class="btn btn-primary" 부트 스트랩 CSS 적용해 속성 추가}}
+<a href="/articles/{{article.id}}/delete" class="btn btn-danger">Delete</a>
+{{!delete 버튼 만들기}}
 <a href="/articles">GO to Article List</a>
+
 
 {{>layouts/footer}}

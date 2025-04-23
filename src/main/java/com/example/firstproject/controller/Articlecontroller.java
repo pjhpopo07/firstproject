@@ -7,10 +7,12 @@ import org.apache.tomcat.util.modeler.BaseAttributeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.firstproject.dto.ArticleForm;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +86,7 @@ public class Articlecontroller {
     //GetMapping()의 어노테이션 url 주소에 있는 id를 받아 오는 것이므로 @PathVariable 추가
     //show.mustache에서 /articles/{{article.id}}/edit로 만들었으니 url에 똑같이 넣어준다.
     public String update(@PathVariable Long id, Model model) {
+        log.info("수정 요청이 들어왔습니다!!");
         //1.수정할 데이터 가져오기
         Article articleEntity = articleRepository.findById(id).orElse(null);//#2 두번째 방법
         //id값으로 데이터를 찾을 id 값이 없으면 null로 반환하라는 뜻
@@ -103,14 +106,28 @@ public class Articlecontroller {
         //엔티티로 잘 변환됐는지 로그 찍기
         //2. 엔티티를 DB에 저장하기
         //2-1 DB에서 기존 데이터 가져오기
-        Article tagert= articleRepository.findById(articleEntity.getId()).orElse(null);
+        Article taget= articleRepository.findById(articleEntity.getId()).orElse(null);
         //2-2 기존 데이터 값을 갱신하기
-        if(tagert != null) {
+        if(taget != null) {
             articleRepository.save(articleEntity);
         }
         log.info(form.toString());
         //3. 수정 결과 페이지로 리다이렉트하기
         return "redirect:/articles/"+ articleEntity.getId();
+    }
+    @GetMapping("/articles/{id}/delete")
+    public String delete(@PathVariable Long id, RedirectAttributes rttr) {
+        log.info("삭제 요청이 들어왔습니다!!");
+        //1. 삭제할 대상 가져오기
+        Article target = articleRepository.findById(id).orElse(null);
+        log.info(target.toString());
+        //2. 대상 엔티티 삭제하기
+        if(target != null) {
+            articleRepository.delete(target);
+            rttr.addFlashAttribute("msg","삭제됐습니다!");
+        }
+        //3. 결과 페이지로 리다이렉트하기
+        return "redirect:/articles";
     }
 
 }
