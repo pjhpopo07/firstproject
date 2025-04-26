@@ -12,7 +12,7 @@ public class Article {
     /*Article 클래스 'Article'에는
     [public, protected] no-arg 생성자가 포함되어아 하는 오류*/
     @Id //대표값을 지정! LIKE A 주민등록번호
-    @GeneratedValue //1,2,3,... 자동 생성 어노테이션
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //1,2,3,... 자동 생성 어노테이션
     private Long id;
     //Entity에는 대표값을 넣어야 한다.
 
