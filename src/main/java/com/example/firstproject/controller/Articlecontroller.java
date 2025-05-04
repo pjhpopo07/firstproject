@@ -93,7 +93,7 @@ public class Articlecontroller {
 
         //2.모델에 데이터를 등록하기
         model.addAttribute("article", articleEntity);
-        //articleList -> article로 변환
+        //articleEntity -> article로 변환
 
         //3.뷰페이지 설정하기
         return "articles/edit";
@@ -121,7 +121,7 @@ public class Articlecontroller {
         //1. 삭제할 대상 가져오기
         Article target = articleRepository.findById(id).orElse(null);
         log.info(target.toString());
-        //2. 대상 엔티티 삭제하기
+        //2. 대상 엔티티 삭   제하기
         if(target != null) {
             articleRepository.delete(target);
             rttr.addFlashAttribute("msg","삭제됐습니다!");

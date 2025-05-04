@@ -22,6 +22,13 @@ public class Article {
     @Column
     private  String content;
 
+    public void patch(Article article) {
+        if (article.title != null)
+            this.title = article.title;
+        if (article.content != null)
+            this.content = article.content;
+    } //title이나 content 값이 null이 아니면 값을 갱신합니다.
+
     ///lic Long getId() {//주의 데이터 타입을 String -> Long으로 변경
     ///return id;
     ///}*
