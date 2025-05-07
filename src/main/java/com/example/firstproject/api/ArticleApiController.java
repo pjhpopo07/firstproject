@@ -58,4 +58,18 @@ public class ArticleApiController {
                 ResponseEntity.status(HttpStatus.NO_CONTENT).build() :
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+    @PostMapping("api/transaction-test")
+    public ResponseEntity<List<Article>> transactionTest(@RequestBody List<ArticleForm> dtos) {
+        //@RequestBody는 REST API방식으로 POST 요청으로 받고 있으모로
+        //서버에서 응답할 때 데이터 생성 결과뿐만 아니라 상태 코드도 함께 보내므로 ResponseEntity<List<Article>>으로 반환한다.
+        List<Article> createdList = articleService.createArticles(dtos);
+        //여러 게시글의 생성 요청을 받은 컨트롤러는 articleService의 createArticles() 메서드를 호출한다.
+        //이때 매개변수 dtos도 함께 전달 잘 보낸 경우 반환값은 createList 리스트로 저장한다.
+        return (createdList !=null) ?
+                ResponseEntity.status(HttpStatus.OK).body(createdList) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        //createList에 내용이 있다면 생성이 잘 되엇다는 뜻이므로 ResponseEntity의 상태에는 ok라 하고 본문에는 createdlist를 실어 보낸다.
+
+    }
+
 }
