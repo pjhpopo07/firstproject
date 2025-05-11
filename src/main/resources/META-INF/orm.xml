@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence/orm
+                                     https://jakarta.ee/xml/ns/persistence/orm/orm_3_0.xsd"
+                 version="3.0">
+
+    <!-- 여기에 entity 매핑 정보 넣음 -->
+    <named-native-query
+            name="Comment.finByNickname"
+            result-class="com.example.firstproject.entity.Comment">
+        <!--name은 쿼리를 수행하는 대상 엔티티.메서드 이름 작성, result class 속성은 쿼리를 반환하는 타입의 전체 패키지 경로 -->
+        <query>
+            <![CDATA[
+                SELECT * FROM comment WHERE nickname =:nickname
+            ]]>
+            <!--특정 게시글의 모든 댓글 조회하기 위해 쿼리 어노테이션을 이용해 findByNickname메서드 작성-->
+        </query>
+    </named-native-query>
+</entity-mappings>

@@ -1,0 +1,51 @@
+package com.example.firstproject.repository;
+
+import com.example.firstproject.entity.Article;
+import com.example.firstproject.entity.Comment;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@DataJpaTest //리파지터리 테스트하므로 @DataJpaTest 어노테이션을 사용한다.
+class CommentRepositoryTest {
+    @Autowired
+    CommentRepository commentRepository;
+    @Test
+    @DisplayName("특정 게시글의 모든 댓글 조회") //테스트의 메서드명을 한글로 직접 수정하지 않고 어노테이션 사용
+    void findByArticleId() {
+        //case 1: 4번 게시글의 모든 댓글 조회
+        {
+            //1. 입력 데이터 준비
+            Long articed = 4L;
+            //2. 실제 데이터
+            List<Comment> comments = commentRepository.findByArticleId(articed);
+            //3. 예상 데이터
+            Article article=new Article(4L,"당신의 인생 영화는?", "댓글 고"); //부모 게시글 객체 생성
+            //글 객체 생성
+            Comment a = new Comment(1L,article,"Park","굿 월 헌팅");
+            Comment b = new Comment(2L,article,"Kim","아이 엠 셈");
+            Comment c = new Comment(3L, article,"Choi","쇼생크 탈출");
+            List<Comment> expected = Arrays.asList(a,b,c); //댓글 객체 합치기
+            //4. 비교 및 검증
+            assertEquals(expected.toString(), comments.toString(),"4번의 글의 모든 댓글을 출력!");
+        }
+    }
+    @Test
+    void findByNickname() {
+        {
+            //1.입력 데이터 준비
+            //2.실제 데이터
+            //3.예상 데이터
+            //4. 비교 및 검증
+        }
+
+    }
+
+}
