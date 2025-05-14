@@ -53,8 +53,9 @@ class CommentRepositoryTest {
                     nickname,"치킨");
             Comment c = new Comment(7L, new Article(6L,"당신의 취미는?","댓글 고고고"),
                     nickname,"조깅");
+            List<Comment> expected = Arrays.asList(a,b,c); //댓글 객체 합치기
             //4. 비교 및 검증'
-            assertEquals(expected.toString(), comments.toString(),"4번의 글의 모든 댓글을 출력!");
+            assertEquals(expected.toString(), comments.toString(),"Park의 모든 댓글을 출력!");
         }
 
     }
