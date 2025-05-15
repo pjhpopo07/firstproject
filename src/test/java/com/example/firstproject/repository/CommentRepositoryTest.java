@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 @DataJpaTest //리파지터리 테스트하므로 @DataJpaTest 어노테이션을 사용한다.
 class CommentRepositoryTest {

@@ -1,5 +1,6 @@
 package com.example.firstproject.entity;
 
+import com.example.firstproject.dto.CommentDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,4 +28,23 @@ public class Comment {
     private String nickname; //댓글을 단 사람
     @Column
     private String body; //댓글 본문
+
+    public static Comment createComment(CommentDto dto, Article article) {
+        //1.예외 발생
+        //예외 발생 코드 2가지 1-1.dto id 존자핼 경우  IllegalArgumentException 예외발생
+        //1-1.1 의도적으로 IllegalArgumentException 예외 발생 -> throw new IllegalArgumentException("메세지")
+        if(dto.getId()!=null)
+            throw new IllegalArgumentException("댓글 생성 실패! 댓글의 id가 없어야 합니다.");
+        if(dto.getArticleId() != article.getId())
+            throw new IllegalArgumentException("댓글 생성 실패! 게시글의 id가 잘못됐습니다.");
+        //2.엔티티 생성 및 반환
+        //예외 상황이 발생하지 않았다면 엔티티를 만들어 반환하게 한다.
+        //전달값으로 필요한 요소 id,nickname,body는 dto로 가져오고 부모게이글은 article 자체 입력
+        return new Comment(
+                dto.getId(),
+                article,
+                dto.getNickname(),
+                dto.getBody()
+        );
+    }
 }

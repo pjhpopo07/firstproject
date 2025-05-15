@@ -48,7 +48,7 @@ public class CommentService {
         //스트림 관련 학습 필요시 자바 문법 중 스트림과 람다식 복습
     }
     @Transactional //create 메서드는 DB내용을 바꾸기 때문에 실패할 경우를 대비해야 한다. 실패시 롤백
-    public CommetDto create(Long articleId, CommentDto dto) {
+    public CommentDto create(Long articleId, CommentDto dto) {
         //1. 게시글 조회 및 에외 발생
         Article article = articleRepository.findById(articleId) //부모 게시글 (Article) 가져오기
                 .orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패!"+"" +
@@ -58,6 +58,7 @@ public class CommentService {
         //2. 댓글 엔티티 생성
         Comment comment = Comment.createComment(dto, article);
         //DTO랑 게시글 엔티티를 입력받아 댓글 엔티티를 만든다.
+        //createComment() -> 엔티티 메서드 생성()
 
         //3. 댓글 엔티티를 DB에 저장
         Comment created = commentRepository.save(comment);
