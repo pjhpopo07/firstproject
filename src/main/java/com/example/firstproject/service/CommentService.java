@@ -48,10 +48,10 @@ public class CommentService {
         //스트림 관련 학습 필요시 자바 문법 중 스트림과 람다식 복습
     }
     @Transactional //create 메서드는 DB내용을 바꾸기 때문에 실패할 경우를 대비해야 한다. 실패시 롤백
-    public CommetDto create(Long articleId, CommentDto dto) {
+    public CommentDto create(Long articleId, CommentDto dto) {
         //1. 게시글 조회 및 에외 발생
         Article article = articleRepository.findById(articleId) //부모 게시글 (Article) 가져오기
-                .orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패!"+"" +
+                .orElseThrow(() -> new IllegalArgumentException("댓글 생성 실패!"+
                         "대상 게시글이 없습니다")); // 없으면 에러 메세지 출력
         //orElseThrow 메서드는 Optional 객체에 값이 존재하면 그 값을 반환하고, 값이 존재하지 않으면 전달값으로 보낸 예외를 발생
 
@@ -67,4 +67,17 @@ public class CommentService {
         // created 엔티티를 DTO로 변환 후 반환한다. 새로운 DTO로 변환해 컨트롤러에 반환한다.
     }
 
+    @Transactional
+    public CommentDto update(Long id, CommentDto dto) {
+        //1. 댓글 조회 및 예외 발생
+        Comment target = commentRepository.findById(id) //수정할 데이터 가져오기
+                .orElseThrow(()-> new IllegalArgumentException("댓글 수정 실패"+
+                        "대상 댓글이 없습니다"));  //없으면 에러 메세지 출력
+        //2. 댓글 수정
+        target.patch(dto); //patch 메서드는 아직 작성하지 않아 빨간색으로 표시될 수 있다.
+        //3. DB로 갱신
+        Comment updated = commentRepository.save(target);
+        //4. 댓글 엔티티를 DTO로 변환 및 반환
+        return CommentDto.createCommentDto(updated);
+    }
 }
