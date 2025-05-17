@@ -31,8 +31,16 @@ public class CommentApiController {
         //댓글 생성을 위해 CommentService의 articleId 랑 dto 메서드를 호출한다
 
         //결과 응답
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
+        return ResponseEntity.status(HttpStatus.OK).body(createdDto);
     }
     //3. 댓글 수정
+    @PatchMapping("/api/comments/{id}")
+    public ResponseEntity<CommentDto> update(@RequestBody CommentDto dto, @PathVariable Long id){
+        //@RequestBody JSON 데이터를 dto로 받는다/
+        //서비스 위임
+        CommentDto updatedDto = commentService.update(id, dto);
+        //결과응답
+        return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+    }
     //4. 댓글 삭제
 }
