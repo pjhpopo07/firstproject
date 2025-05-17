@@ -24,7 +24,7 @@ public class CommentApiController {
         //REST API의 응답은 ResponseEntity에 실어 보내야한다.
     }
     //2. 댓글 생성
-    @PostMapping("/api/articles/{articledId}/comments")
+    @PostMapping("/api/articles/{articleId}/comments")
     public ResponseEntity<CommentDto> create(@PathVariable Long articleId, @RequestBody CommentDto dto){
         //서비스 위임
         CommentDto createdDto = commentService.create(articleId,dto);
@@ -43,4 +43,11 @@ public class CommentApiController {
         return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
     }
     //4. 댓글 삭제
+    @DeleteMapping("/api/comments/{id}")
+    public ResponseEntity<CommentDto> delete(@PathVariable Long id){
+        //서비스 위임
+        CommentDto deteledDto = commentService.delete(id);
+        //결과 응답
+        return ResponseEntity.status(HttpStatus.OK).body(deteledDto);
+    }
 }

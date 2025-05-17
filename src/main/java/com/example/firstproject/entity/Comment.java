@@ -1,5 +1,6 @@
 package com.example.firstproject.entity;
 
+import com.example.firstproject.dto.CommentDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,5 +46,20 @@ public class Comment {
                 dto.getNickname(),
                 dto.getBody()
         );
+    }
+
+    public void patch(CommentDto dto) {
+        //예외발생
+        //id와 JSON 데이터의 id가 다른 경우를 처리 코드로 표현하면 this 객체의 id가 dto에서 가져온 id와
+        //다른 경우이다. 이 경우 예외 처리한다.
+        if(this.id != dto.getId())
+            throw new IllegalArgumentException("댓글 수정 실패! 잘못된 id가 입력됐습니다.");
+        //객체 갱신
+        //예외가 발생하지 않았다면 수정할 내용을 적용 수정 내용이 dto에 있으므로 이를 기존 댓글(this)에 반영
+
+        if (dto.getNickname() != null) //수정할 닉네임 데이터가 있다면
+            this.nickname = dto.getNickname(); //내용반영
+        if (dto.getBody() != null) //수정할 본문 데이터가 있다면
+            this.body = dto.getBody(); //내용 반영
     }
 }
