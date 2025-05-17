@@ -1,0 +1,16 @@
+<div class="comments-list"> <!--모ㄱ록 전체를 보여주는 영역을 만듬-->
+    {{#commentDtos}} <!--댓글 목록 순회-->
+        <div class="card m-2" id="comments-{{id}}"> <!--댓글 카드 만들고 id 부여-->
+        <!--부트스트랩에서  Header and footer 카드를 찾아 card-header cared-body 가져와 사용-->
+            <div class="card-header"> <!--댓글 헤더 영역 설정-->
+                {{nickname}}
+            </div>
+
+            <div class="card-body"> <!--댓글 헤더 영역 설정-->
+                {{body}}
+            </div>
+
+        </div>
+    {{/commentDtos}}
+
+</div>
