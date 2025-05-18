@@ -4,7 +4,15 @@
         <!--부트스트랩에서  Header and footer 카드를 찾아 card-header cared-body 가져와 사용-->
             <div class="card-header"> <!--댓글 헤더 영역 설정-->
                 {{nickname}}
+                <!--수정 버튼을 넣을 자리-->
+                <!-- Button trigger modal -->
+                <button type="button"
+                        class="btn btn-sm btn-outline-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#comment-edit-modal">수정</button> <!--제목 변경-->
+                <!-- id 변경-->
             </div>
+
 
             <div class="card-body"> <!--댓글 헤더 영역 설정-->
                 {{body}}
@@ -13,4 +21,42 @@
         </div>
     {{/commentDtos}}
 
+</div>
+<!-- Modal -->
+<div class="modal fade" id="comment-edit-modal" tabindex="-1"> <!--id 변경-->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5"
+                    id="exampleModalLabel">댓글 수정</h1> <!--모달 제목 변경-->
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--댓글 본문 입력-->
+                <form>
+                    <!--닉네임 입력 폼 만들기-->
+                    <div class="mb-3">
+                        <label class="form-label">닉네임</label>
+                        <input type="text" class="form-control"
+                               id="edit-comment-nickname"> <!--id 수정-->
+                    </div>
+                    <!--댓글 본문 입력 폼 만들기-->
+                    <div class="mb-3">
+                        <label class="form-label">댓글 내용</label>
+                        <textarea type="text" class="form-control" rows="3"
+                                  id="edit-comment-body"></textarea> <!--id 수정-->
+                    </div>
+                    <!--히든 iuput-->
+                        <input type="hidden" id="edit-comment-id"> <!--히든 인풋 요소정의-->
+                        <input type="hidden" id="edit-comment-article-id"> <!--히든 인풋 요소정의-->
+
+                    <button type="button" class="btn btn-primary"
+                            id="comment-update-btn">수정 완료</button> <!--id,제목 수정-->
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
