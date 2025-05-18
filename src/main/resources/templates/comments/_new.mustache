@@ -1,0 +1,65 @@
+<div class="card m-2" id="comments-new">
+    <div class="card-body">
+        <form>
+            <div class="mb-3"> <!--닉네임 입력 폼 만들기-->
+                <label class="form-label">닉네임</label>
+                <input type="text" class="form-control" id="new-comment-nickname">
+            </div>
+            <div class="mb-3"> <!--댓글 본문 입력 폼 만들기-->
+                <label class="form-label">댓글 내용</label>
+                <textarea type="text" class="form-control" rows="3"
+                          id="new-comment-body"></textarea>
+            </div>
+            <!--히든 iuput-->
+            {{#article}}
+                <input type="hidden" id="new-comment-article-id" value="{{id}}">
+            {{/article}}
+            <button type="button" class="btn btn-primary"
+                    id="comment-create-btn">댓글 작성</button> <!--전송 버튼 만들기-->
+        </form>
+    </div>
+</div>
+<script> <!--버튼 클릭 이벤트 감지하기-->
+{
+    //1. 댓글 생성 버튼 변수화
+    const commentCreateBtn = document.querySelector("#comment-create-btn");
+    //querySelector()메서드  스크립트 on 개발 org 클릭해 자세히 알수 있다.
+    //댓글 작성 버튼을 변수로 받아 왔으니 addEventListener()메서드 사용 HTML 문서의 특정 요소가 이벤트 감지
+    //리스너(Listene)라는 이름처럼 해당 요소에 이벤트가 발생하는지 항상 귀에 대고 잇다가 이벤트 발생하면 지정된 함수를 실행
+    //이벤트가 감지되면 이벤트 처리 함수 실행 형식: 요소명.addEventListener("이벤트_타입",이벤트_처리_함수)
+    //2. 댓글 클릭 이벤트 감지
+    commentCreateBtn.addEventListener("click", function() {
+        //새 댓글 객체 생성
+        const comment ={
+            //새 댓글의 닉네임
+            nickname: document.querySelector("#new-comment-nickname").value,
+            //새 댓글의 본문
+            body: document.querySelector("#new-comment-body").value,
+            //부모 게시글 id
+            articleId: document.querySelector("#new-comment-article-id").value,
+        };
+        console.log(comment);
+        //fetch() -비동기 통신을 위한 API
+        const url="/api/articles/"+comment.articleId+"/comments"
+        //fetch() 함수 작성법
+        //1.첫번째 전달값으로 API주소를 가지고 있는 URL 넘긴다.
+        //2.두 번째 전달값으로 요청 메서드,헤더 정보,전송 본문을 넘긴다
+        fetch(url,{
+            method:"POST", //POST 요청
+            headers:{  //전송 본문의 데이터 타입(JSON) 정보
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(comment) //comment 객체를 JSON 문자열로 변환해 전송
+        }).then(response=>{
+            //HTTP 응답 코드에 따른 메세지 출력
+            const msg=(response.ok)? "댓글이 등록됐습니다.": "댓글 등록 실패..!";
+            alert(msg);
+            //현재 페이지 새로고침
+            window.location.reload();
+        })
+        //응답 객체의 상태가 ok랑 실패를 msg 변수에 저장 후 alert()함수로 출력
+        //댓글 생성을 완료하고 메세지까지 잘 출력됏다면 window.location.reload() 웹페이지 새로 고침
+    });
+
+}
+</script>

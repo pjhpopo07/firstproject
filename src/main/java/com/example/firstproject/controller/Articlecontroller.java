@@ -64,11 +64,11 @@ public class Articlecontroller {
         Article articleEntity = articleRepository.findById(id).orElse(null);//#2 두번째 방법
         //id값으로 데이터를 찾을 id 값이 없으면 null로 반환하라는 뜻임
         //CommentService의 comments(id) 메서드를 호출해 조회한 댓글 목록을 List<CommentDto>타입의 commentDtos 변수에 저장
-        List<CommentDto> commentDtos = commentService.comments(id); //comentService가 빨간색으로 뜨기 떄문에 위에서 객체를 주입한다.
+        List<CommentDto> commentsDtos = commentService.comments(id); //comentService가 빨간색으로 뜨기 떄문에 위에서 객체를 주입한다.
         //2. 모뎀에 데이터 등록하기
         model.addAttribute("article", articleEntity);
         //article이라는 이름에 articleEntity 객체를 등록한다. 형식(model.addAttribute("String name,Object name)
-        model.addAttribute("commentDtos", commentDtos); //받아 온 댓글 목록(CommentDtos)을 모델에 등록한다
+        model.addAttribute("commentDtos", commentsDtos); //받아 온 댓글 목록(CommentDtos)을 모델에 등록한다
         //3. 뷰페이지 반환하기
         return "articles/show";
         //localhost:8080/articles/1000으로 접속
