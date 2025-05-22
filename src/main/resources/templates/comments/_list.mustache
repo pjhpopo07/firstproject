@@ -9,7 +9,12 @@
                 <button type="button"
                         class="btn btn-sm btn-outline-primary"
                         data-bs-toggle="modal"
-                        data-bs-target="#comment-edit-modal">수정</button> <!--제목 변경-->
+                        data-bs-target="#comment-edit-modal"
+                        data-bs-id="{{id}}"
+                        data-bs-nickname="{{nickname}}"
+                        data-bs-body="{{body}}"
+                        data-bs-article-id="{{articleId}}">
+                        수정</button> <!--제목 변경-->
                 <!-- id 변경-->
             </div>
 
@@ -34,6 +39,51 @@
                         data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
+            <!--모달 이벤트 처리--> <!---->
+            <script>
+                {
+                    //모달 요소 선택(querySelector()메서드로 모달을 선택후 이를 변수에 저장한다.)
+                    const commentEditModal = document.querySelector("#comment-edit-modal");
+
+                    //모달 이벤트 감지
+                    commentEditModal.addEventListener("show.bs.modal",function(event){
+                        //1. 트리거 버튼 선택
+                        //1-1. event의 relatedTarget으로 선택한 버튼을 triggerBtn 변수에 저장
+                        const  triggerBtn = event.relatedTarget;
+                        //2. 데이터 가져오기
+                        const id = triggerBtn.getAttribute("data-bs-id");
+                        const nickname = triggerBtn.getAttribute("data-bs-nickname");
+                        const body = triggerBtn.getAttribute("data-bs-body");
+                        const articleId = triggerBtn.getAttribute("data-bs-article-id");
+                        //3. 수정 폼 데이터 반영
+                        //3-1. 가져온 데이터를 모달의 각 폼에 반영합니다.
+                        document.querySelector("#edit-comment-nickname").value = nickname; //닉네임 반영
+                        document.querySelector("#edit-comment-body").value = body; //댓글 본문 반영
+                        document.querySelector("#edit-comment-id").value = id; //id 반영
+                        document.querySelector("#edit-comment-article-id").value = articleId; //부모 id 반영
+
+                    });
+                }
+                {
+                    //수정 완료 버튼 선택
+                    const commentUpdateBtn = document.querySelector("#comment-update-btn");
+                    //클릭 이벤트 처리
+                    commentUpdateBtn.addEventListener("click", function (){
+                        //17장에서 한것처럼 객체를 변수로 선언하는 객체 리터럴 방식으로 생성
+                        //객체의 키 id,body,nickname,articleId 각 키의 값은 querySelecto()로 댓글 수정폼의 각 요소를 선택한 후 value값 가져오기
+                        //수정 댓글 객체 생성
+                        const comment = {
+                            id: document.querySelector("#edit-comment-id").value,
+                            nickname: document.querySelector("#edit-comment-nickname").value,
+                            body: document.querySelector("#edit-comment-body").value,
+                            article_id: document.querySelector("#edit-comment-article-id").value
+                        };
+                        console.log(comment);
+                        //수정 rest api 호출
+                        const url = "/api/comments/"+comment.id;
+                    });
+                }
+            </script>
             <div class="modal-body">
                 <!--댓글 본문 입력-->
                 <form>
@@ -50,8 +100,10 @@
                                   id="edit-comment-body"></textarea> <!--id 수정-->
                     </div>
                     <!--히든 iuput-->
-                        <input type="hidden" id="edit-comment-id"> <!--히든 인풋 요소정의-->
-                        <input type="hidden" id="edit-comment-article-id"> <!--히든 인풋 요소정의-->
+                    <!--18-1 18장 [수정완료] 버튼에서 마우스 버튼을 클릭하고 [검사]메뉴를 선택-->
+                    <!--18-1 도구가 열리면 [Element]탭에서 히든 인풋 요소의 값이 각각 4와 5임을 확인할 수 있다,-->
+                        <input type="hidden" id="edit-comment-id" value="4"> <!--히든 인풋 요소정의-->
+                        <input type="hidden" id="edit-comment-article-id" value="5"> <!--히든 인풋 요소정의-->
 
                     <button type="button" class="btn btn-primary"
                             id="comment-update-btn">수정 완료</button> <!--id,제목 수정-->
